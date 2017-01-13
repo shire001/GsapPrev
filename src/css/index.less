@@ -1,0 +1,193 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+  font-weight: lighter;
+}
+
+@backColor: #2f2e2e;
+@borderColor: #aaa;
+#MainView, #FileView, #PropertyView {
+  box-sizing: border-box;
+  background-color: @backColor;
+  color: #eee;
+  border: solid 0.1em @borderColor;
+}
+
+#Top, #Contents {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+#Contents {
+  display: flex;
+  flex-flow: wrap;
+}
+
+#MainView {
+  position: relative;
+  height: 625px;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  .mainView-inner {
+    width: 800px;
+    height: 600px;
+    background-color: @backColor;
+    .animElem-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .animElem {
+      position: relative;
+      .img {
+        position: relative;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .animElem::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background-color: #00d9ff;
+      .transition(opacity, 250ms);
+    }
+    .animElem:hover::after {
+      opacity: 0.5;
+    }
+    .animElem.selected::after {
+      opacity: 0.5;
+    }
+  }
+  #Controller {
+    height: 25px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    color: white;
+    background-color: #585858;
+    .fa {
+      margin: auto 5px;
+      .transition(all, 250ms);
+    }
+    .fa:hover {
+      color: rgb(106, 255, 255);
+    }
+  }
+  .images {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+  }
+
+  .image-default {
+    height: 100%;
+    animation: fadeIn 2s ease 0s 1 normal;
+  }
+
+  .image-bg {
+    display: none;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: 1;
+    position: absolute;
+  }
+
+  .image-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 110vh;
+    object-fit: cover;
+    z-index: 6;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10vh;
+  }
+}
+
+#FileView {
+  height: calc(~"100% - 625px");
+  width: 800px;
+  overflow: auto;
+  .directory:before {
+    content: "\f04b";
+    font-family: FontAwesome;
+    font-size: x-small;
+    position: relative;
+    left: -0.5em;
+    vertical-align: top;
+    display: inline-block;
+    .transition(transform);
+  }
+  .directory.open:before {
+    transform: rotate(90deg);
+  }
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: block;
+    background-color: #333;
+    &.selected {
+      background-color: #444;
+    }
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 2em;
+    line-height: 1em;
+    .transition(all, 250ms);
+  }
+  li:hover {
+    background-color: #444;
+  }
+}
+
+.fileview-ele {
+  cursor: pointer;
+}
+
+#PropertyView {
+  width: calc(~"100% - 800px");
+  height: calc(~"100% - 625px");
+  padding: 0.2em;
+  #FilePropertyView {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    .property-image {
+      width: 100%;
+      height: 100%;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+      }
+    }
+  }
+}
+
+.transition(@target: all, @ms: 500ms) {
+  transition-property: @target;
+  transition-duration: @ms;
+  transition-timing-function: cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}
