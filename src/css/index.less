@@ -7,6 +7,10 @@ html, body {
   font-weight: lighter;
 }
 
+body {
+  background-color: @backColor;
+}
+
 @backColor: #2f2e2e;
 @borderColor: #aaa;
 #MainView, #FileView, #PropertyView {
@@ -183,6 +187,37 @@ html, body {
         height: auto;
       }
     }
+  }
+}
+
+#CodeView {
+  width: calc(~"100% - 800px");
+  height: 625px;
+  .code-selector {
+    background-color: @backColor;
+    color: white;
+    height: 30px;
+    width: 33%;
+    margin: auto;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    cursor: pointer;
+    .transition(all, 0.25s);
+  }
+  .code-selector:hover {
+    background-color: #555;
+  }
+  .code-selector.selected {
+    background-color: #444;
+  }
+  .code-set {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+  }
+  .codeTab {
+    position: absolute;
   }
 }
 
